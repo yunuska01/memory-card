@@ -52,3 +52,25 @@ while game:
         treasure.reset()
         display.update()
         clock.tick(60)
+        class GameSprite(sprite.Sprite):
+    def init(self, player_img,player_x,player_y,player_speed):
+        super().init()
+        self.image = transform.scale(image.load(player_img),(65,65))
+        self.speed = player_speed
+        self.rect = self.image.get_rect()
+        self.rect.x = player_x
+        self.rect.y = player_y
+        self.autos = 'right'
+    def reset(self):
+        window.blit(self.image,(self.rect.x,self.rect.y))
+class Player(GameSprite):
+    def update(self):
+        keys = key.get_pressed()
+        if keys[K_UP] and self.rect.y > 5:
+            self.rect.y -= self.speed
+        if keys[K_DOWN] and self.rect.y < 435:
+            self.rect.y+= self.speed
+        if keys[K_RIGHT] and self.rect.x < 635:
+            self.rect.x += self.speed
+        if keys[K_LEFT] and self.rect.x > 5:
+            self.rect.x -= self.speed
